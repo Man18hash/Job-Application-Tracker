@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🚀 Job Tracker - Enterprise MERN Stack Application
 
 [![CI/CD Pipeline](https://github.com/Man18hash/Job-Application-Tracker/workflows/CI/CD%20Pipeline/badge.svg)](https://github.com/Man18hash/Job-Application-Tracker/actions)
@@ -599,3 +600,6 @@ This project demonstrates **real-world software engineering skills** that employ
 
 
 
+=======
+# Job-Application-Tracker
+>>>>>>> db237baf68f65b16524b68107557198d1d0acf0d
