@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: job-tracker-mongodb-dev
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: jobtracker
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_dev_data:/data/db
+      - ./server/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - job-tracker-dev-network
+
+  # Express API Server (Development)
+  server-dev:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    container_name: job-tracker-server-dev
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: 5000
+      MONGODB_URI: mongodb://admin:password123@mongodb:27017/jobtracker?authSource=admin
+      CLIENT_URL: http://localhost:5173
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongodb
+    networks:
+      - job-tracker-dev-network
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+
+volumes:
+  mongodb_dev_data:
+    driver: local
+
+networks:
+  job-tracker-dev-network:
+    driver: bridge
+
+
+
+
